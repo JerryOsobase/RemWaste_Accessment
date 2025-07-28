@@ -45,7 +45,7 @@
 
     **npm run UIFirefoxTest**
 
-    **N/B:** The frontend UI Tests directory can be found in **"/Users/Jerry/WasteTrackr/frontend/Playwright_tests"** and Backend API Tests can be found in **"WasteTrackr/backend/Postman_tests"**
+    **N/B:** The frontend UI Tests directory can be found in **"WasteTrackr/frontend/Playwright_tests"** and Backend API Tests can be found in **"WasteTrackr/backend/Postman_tests"**
 
 ## Expected Results:
 
