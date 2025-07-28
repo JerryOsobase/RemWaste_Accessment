@@ -34,7 +34,7 @@
      
      **N/B:** make sure docker run successfully with success message **"webpack compiled successfully"** before going back to the initial terminal to run tests
      
-4. Run API Test with Newman using:
+4. Run API Test with Postman Newman using:
 
       **npm run ApiPostmanTest** 
       
