@@ -27,7 +27,7 @@
    
      **npm run install**
      
-     **N/B:** On mac, apple might block **"fsevents.node"** from installing, kindly go to **"Privacy and Security"** to approve and run **npm run install** again
+     **N/B:** On mac, apple might block **"fsevents.node"** from installing, kindly go to **"Privacy and Security"** in System settings to approve and run **npm run install** again
      
 3. **Start the Docker Containers:**
    - Navigate to the project’s root directory in another bash terminal without closing the previous terminal to bring up the Docker containers for  frontend, backend, and MySQL using:
