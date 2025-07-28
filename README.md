@@ -19,29 +19,32 @@
 
 ## Steps to Run the Application:
 
-1. **Install Dependencies:**
-   - Navigate to the project’s root directory in your bash terminal and install the necessary dependencies for the frontend, backend, postman and playwright using:
+1. **Download Code**
+   - Access code by cloning repo or downloading the zip file
+
+2. **Install Dependencies:**
+   - Navigate to the project’s root directory in your bash terminal and install the necessary dependencies for frontend, backend, postman and playwright using:
    
      **npm run install**
 
-2. **Start the Docker Containers:**
-   - Bring up the Docker containers in another bash terminal for frontend, backend, and MySQL:
+3. **Start the Docker Containers:**
+   - Navigate to the project’s root directory in another bash terminal without closing the previous terminal to bring up the Docker containers for  frontend, backend, and MySQL using:
    
      **npm run dockerSetup**
      
      **N/B:** make sure docker run successfully with success message **"webpack compiled successfully"** before going back to the initial terminal to run tests
      
-3. Run API Test with Newman using:
+4. Run API Test with Newman using:
 
       **npm run ApiPostmanTest** 
       
     **N/B:** Once test is done, navigate to **"WasteTrackr/backend/Postman_tests/newman"** and open HTML report file to view a well detailed test report provider by newman reporter
 
-4. Run UI Test on Chrome with playwright using:
+5. Run UI Test on Chrome with playwright using:
  
     **npm run UIChromeTest** 
 
-5. Run UI Test on firefox with playwright using:
+6. Run UI Test on firefox with playwright using:
 
     **npm run UIFirefoxTest**
 
