@@ -1,0 +1,23 @@
+{
+  "name": "wastetrackr",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install": "npm --prefix frontend install && npm --prefix backend install && npx playwright install && npm --prefix frontend/Playwright_tests install && npm install newman && npm install newman-reporter-htmlextra",
+    "dockerSetup": "docker compose down && docker compose build && docker compose up",
+    "UIChromeTest": "cd frontend/Playwright_tests && npx playwright test --project=chrome",
+    "UIFirefoxTest": "cd frontend/Playwright_tests && npx playwright test --project=firefox",
+    "ApiPostmanTest": "cd backend/Postman_tests && newman run RemWaste_api_collection.postman_collection.json -e remwaste_environment.postman_environment.json -r htmlextra",
+    "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
+    "test:install": "npm --prefix frontend run install && npm --prefix backend run install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.21.0",
+    "concurrently": "^9.2.0",
+    "playwright": "^1.21.0"
+  },
+  "dependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "ca4a3c67-dd10-4492-9854-e7f0c1934234",
+		"name": "RemWaste_api_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17705139"
+	},
+	"item": [
+		{
+			"name": "Invalid Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(401)",
+							"})",
+							"",
+							"pm.test(\"Validating response message\", ()=>{",
+							"    pm.expect(jsonData.message).to.eql(\"Invalid credentials\")",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user\",\n    \"password\": \"user\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"token\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"token\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							"pm.environment.set(\"bearer_token\", jsonData.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"var req = JSON.parse(pm.request.body.raw)",
+							"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"id\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"name\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"description\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"UserId\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"updatedAt\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"createdAt\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"id\",",
+							"    \"name\",",
+							"    \"description\",",
+							"    \"UserId\",",
+							"    \"updatedAt\",",
+							"    \"createdAt\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test(\"Validating correct item information added\", function(){",
+							"    pm.expect(jsonData.name).to.eql(req.name)",
+							"    pm.expect(jsonData.description).to.eql(req.description)",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							"pm.environment.set(\"item_id\", jsonData.id)",
+							"",
+							"pm.environment.set(\"preRequest\", \"Create Item\")",
+							"",
+							"pm.execution.setNextRequest(\"Get All Items\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{itemName}}\",\n    \"description\": \"{{itemDescription}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/items",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"const schema = {",
+							"  \"type\": \"array\",",
+							"  \"items\": [",
+							"    {",
+							"      \"type\": \"object\",",
+							"      \"properties\": {",
+							"        \"id\": {",
+							"          \"type\": \"integer\"",
+							"        },",
+							"        \"name\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"description\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"createdAt\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"updatedAt\": {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        \"UserId\": {",
+							"          \"type\": \"integer\"",
+							"        }",
+							"      },",
+							"      \"required\": [",
+							"        \"id\",",
+							"        \"name\",",
+							"        \"description\",",
+							"        \"createdAt\",",
+							"        \"updatedAt\",",
+							"        \"UserId\"",
+							"      ]",
+							"    }",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							"",
+							"",
+							"pm.test(\"Verify item is added/updated on the list\", function () {",
+							"",
+							"    const expectedItem = {",
+							"    id: pm.environment.get(\"item_id\"),",
+							"    name: pm.variables.get(\"name\"),",
+							"    description: pm.variables.get(\"description\") ",
+							"    }",
+							"",
+							"const lastItem = jsonData[jsonData.length - 1]",
+							"",
+							"    pm.expect(lastItem).to.have.property(\"id\", expectedItem.id)",
+							"    pm.expect(lastItem).to.have.property(\"name\", expectedItem.name)",
+							"    pm.expect(lastItem).to.have.property(\"description\", expectedItem.description)",
+							"});",
+							"",
+							"if(pm.environment.get(\"preRequest\") == \"Update Item\"){",
+							"    pm.execution.setNextRequest(\"Delete Item\")",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if(pm.environment.get(\"preRequest\") == \"Create Item\"){",
+							"    pm.variables.set(\"name\", pm.environment.get(\"itemName\"))",
+							"    pm.variables.set(\"description\", pm.environment.get(\"itemDescription\"))",
+							"}",
+							"else if(pm.environment.get(\"preRequest\") == \"Update Item\"){",
+							"    pm.variables.set(\"name\", pm.environment.get(\"updatedItemName\"))",
+							"    pm.variables.set(\"description\", pm.environment.get(\"updatedItemDescription\"))",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/items",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"var req = JSON.parse(pm.request.body.raw)",
+							"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"id\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"name\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"description\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"UserId\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"updatedAt\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"createdAt\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"id\",",
+							"    \"name\",",
+							"    \"description\",",
+							"    \"UserId\",",
+							"    \"updatedAt\",",
+							"    \"createdAt\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Validating correct item information updated\", function(){",
+							"    pm.expect(jsonData.name).to.eql(req.name)",
+							"    pm.expect(jsonData.description).to.eql(req.description)",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							"pm.environment.set(\"preRequest\", \"Update Item\")",
+							"",
+							"pm.execution.setNextRequest(\"Get All Items\")",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{updatedItemName}}\",\n    \"description\": \"{{updatedItemDescription}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/items/:itemId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"items",
+						":itemId"
+					],
+					"variable": [
+						{
+							"key": "itemId",
+							"value": "{{item_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"",
+							"const schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"message\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"message\"",
+							"  ]",
+							"}",
+							"",
+							"pm.test(\"Validating status code\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Validate response header content-type\", function(){",
+							"    pm.response.to.have.header(\"content-type\")",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"Validating response schema\", ()=>{",
+							"    pm.response.to.have.jsonSchema(schema)",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/items/:itemId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"items",
+						":itemId"
+					],
+					"variable": [
+						{
+							"key": "itemId",
+							"value": "{{item_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
